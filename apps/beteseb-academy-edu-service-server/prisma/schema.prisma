@@ -1,0 +1,207 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Parent {
+  children  String?
+  createdAt DateTime  @default(now())
+  id        String    @id @default(cuid())
+  meetings  Meeting[]
+  updatedAt DateTime  @updatedAt
+  user      User?     @relation(fields: [userId], references: [id])
+  userId    String?
+}
+
+model Student {
+  createdAt                 DateTime               @default(now())
+  exams                     Exam[]
+  id                        String                 @id @default(cuid())
+  performanceAnalyticsItems PerformanceAnalytics[]
+  quizzes                   Quiz[]
+  updatedAt                 DateTime               @updatedAt
+  user                      User?                  @relation(fields: [userId], references: [id])
+  userId                    String?
+  virtualIdCard             String?
+}
+
+model Teacher {
+  createdAt DateTime  @default(now())
+  id        String    @id @default(cuid())
+  meetings  Meeting[]
+  updatedAt DateTime  @updatedAt
+  user      User?     @relation(fields: [userId], references: [id])
+  userId    String?
+}
+
+model Event {
+  createdAt   DateTime  @default(now())
+  date        DateTime?
+  description String?
+  id          String    @id @default(cuid())
+  location    String?
+  title       String?
+  updatedAt   DateTime  @updatedAt
+}
+
+model Message {
+  content   String?
+  createdAt DateTime  @default(now())
+  date      DateTime?
+  id        String    @id @default(cuid())
+  recipient String?
+  sender    String?
+  updatedAt DateTime  @updatedAt
+}
+
+model Meeting {
+  agenda    String?
+  createdAt DateTime  @default(now())
+  date      DateTime?
+  id        String    @id @default(cuid())
+  parent    Parent?   @relation(fields: [parentId], references: [id])
+  parentId  String?
+  teacher   Teacher?  @relation(fields: [teacherId], references: [id])
+  teacherId String?
+  updatedAt DateTime  @updatedAt
+}
+
+model Book {
+  author          String?
+  createdAt       DateTime  @default(now())
+  id              String    @id @default(cuid())
+  isbn            String?
+  publicationDate DateTime?
+  quantity        Int?
+  title           String?
+  updatedAt       DateTime  @updatedAt
+}
+
+model News {
+  createdAt DateTime @default(now())
+  details   String?
+  headline  String?
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Feedback {
+  createdAt DateTime  @default(now())
+  date      DateTime?
+  id        String    @id @default(cuid())
+  message   String?
+  updatedAt DateTime  @updatedAt
+  user      User?     @relation(fields: [userId], references: [id])
+  userId    String?
+}
+
+model DiscussionForum {
+  author    String?
+  content   String?
+  createdAt DateTime  @default(now())
+  date      DateTime?
+  id        String    @id @default(cuid())
+  title     String?
+  updatedAt DateTime  @updatedAt
+}
+
+model Quiz {
+  createdAt DateTime  @default(now())
+  date      DateTime?
+  id        String    @id @default(cuid())
+  result    Result?   @relation(fields: [resultId], references: [id])
+  resultId  String?
+  student   Student?  @relation(fields: [studentId], references: [id])
+  studentId String?
+  subject   String?
+  updatedAt DateTime  @updatedAt
+}
+
+model Administrator {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+}
+
+model PerformanceAnalytics {
+  createdAt DateTime  @default(now())
+  date      DateTime?
+  grade     Int?
+  id        String    @id @default(cuid())
+  student   Student?  @relation(fields: [studentId], references: [id])
+  studentId String?
+  subject   String?
+  updatedAt DateTime  @updatedAt
+}
+
+model Result {
+  createdAt DateTime @default(now())
+  exam      Exam?    @relation(name: "ExamOnResults", fields: [examId], references: [id])
+  examId    String?
+  exams     Exam[]   @relation(name: "ExamsOnResult")
+  id        String   @id @default(cuid())
+  quizzes   Quiz[]
+  score     Float?
+  updatedAt DateTime @updatedAt
+}
+
+model ResourceLibrary {
+  createdAt   DateTime  @default(now())
+  date        DateTime?
+  description String?
+  id          String    @id @default(cuid())
+  resourceUrl String?
+  title       String?
+  updatedAt   DateTime  @updatedAt
+}
+
+model Notification {
+  createdAt DateTime  @default(now())
+  date      DateTime?
+  id        String    @id @default(cuid())
+  message   String?
+  recipient String?
+  updatedAt DateTime  @updatedAt
+}
+
+model Exam {
+  createdAt DateTime  @default(now())
+  date      DateTime?
+  id        String    @id @default(cuid())
+  result    Result?   @relation(name: "ExamsOnResult", fields: [resultId], references: [id])
+  resultId  String?
+  results   Result[]  @relation(name: "ExamOnResults")
+  student   Student?  @relation(fields: [studentId], references: [id])
+  studentId String?
+  subject   String?
+  updatedAt DateTime  @updatedAt
+}
+
+model User {
+  administrators Administrator[]
+  createdAt      DateTime        @default(now())
+  email          String?         @unique
+  feedbacks      Feedback[]
+  firstName      String?
+  id             String          @id @default(cuid())
+  isActive       Boolean?
+  lastName       String?
+  parents        Parent[]
+  password       String
+  role           EnumUserRole?
+  roles          Json
+  students       Student[]
+  teachers       Teacher[]
+  updatedAt      DateTime        @updatedAt
+  username       String          @unique
+}
+
+enum EnumUserRole {
+  Option1
+}
