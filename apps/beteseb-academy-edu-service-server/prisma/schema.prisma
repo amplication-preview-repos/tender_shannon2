@@ -202,6 +202,42 @@ model User {
   username       String          @unique
 }
 
+model ChatMessage {
+  chatSession String?
+  createdAt   DateTime  @default(now())
+  id          String    @id @default(cuid())
+  message     String?
+  sender      String?
+  timestamp   DateTime?
+  updatedAt   DateTime  @updatedAt
+}
+
+model LiveChat {
+  admin        String?
+  createdAt    DateTime @default(now())
+  id           String   @id @default(cuid())
+  isMonitored  Boolean?
+  participants String?
+  updatedAt    DateTime @updatedAt
+}
+
+model AiResponse {
+  answer    String?
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  keywords  String?
+  question  String?
+  updatedAt DateTime @updatedAt
+}
+
+model Faq {
+  answer    String?
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  question  String?
+  updatedAt DateTime @updatedAt
+}
+
 enum EnumUserRole {
   Option1
 }

@@ -17,6 +17,10 @@ import { ResourceLibraryModule } from "./resourceLibrary/resourceLibrary.module"
 import { NotificationModule } from "./notification/notification.module";
 import { ExamModule } from "./exam/exam.module";
 import { UserModule } from "./user/user.module";
+import { ChatMessageModule } from "./chatMessage/chatMessage.module";
+import { LiveChatModule } from "./liveChat/liveChat.module";
+import { AiResponseModule } from "./aiResponse/aiResponse.module";
+import { FaqModule } from "./faq/faq.module";
 import { HealthModule } from "./health/health.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
@@ -47,6 +51,10 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
     NotificationModule,
     ExamModule,
     UserModule,
+    ChatMessageModule,
+    LiveChatModule,
+    AiResponseModule,
+    FaqModule,
     HealthModule,
     PrismaModule,
     SecretsManagerModule,

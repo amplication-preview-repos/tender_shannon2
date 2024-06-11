@@ -77,6 +77,22 @@ import { UserList } from "./user/UserList";
 import { UserCreate } from "./user/UserCreate";
 import { UserEdit } from "./user/UserEdit";
 import { UserShow } from "./user/UserShow";
+import { ChatMessageList } from "./chatMessage/ChatMessageList";
+import { ChatMessageCreate } from "./chatMessage/ChatMessageCreate";
+import { ChatMessageEdit } from "./chatMessage/ChatMessageEdit";
+import { ChatMessageShow } from "./chatMessage/ChatMessageShow";
+import { LiveChatList } from "./liveChat/LiveChatList";
+import { LiveChatCreate } from "./liveChat/LiveChatCreate";
+import { LiveChatEdit } from "./liveChat/LiveChatEdit";
+import { LiveChatShow } from "./liveChat/LiveChatShow";
+import { AiResponseList } from "./aiResponse/AiResponseList";
+import { AiResponseCreate } from "./aiResponse/AiResponseCreate";
+import { AiResponseEdit } from "./aiResponse/AiResponseEdit";
+import { AiResponseShow } from "./aiResponse/AiResponseShow";
+import { FaqList } from "./faq/FaqList";
+import { FaqCreate } from "./faq/FaqCreate";
+import { FaqEdit } from "./faq/FaqEdit";
+import { FaqShow } from "./faq/FaqShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -228,6 +244,34 @@ const App = (): React.ReactElement => {
           edit={UserEdit}
           create={UserCreate}
           show={UserShow}
+        />
+        <Resource
+          name="ChatMessage"
+          list={ChatMessageList}
+          edit={ChatMessageEdit}
+          create={ChatMessageCreate}
+          show={ChatMessageShow}
+        />
+        <Resource
+          name="LiveChat"
+          list={LiveChatList}
+          edit={LiveChatEdit}
+          create={LiveChatCreate}
+          show={LiveChatShow}
+        />
+        <Resource
+          name="AiResponse"
+          list={AiResponseList}
+          edit={AiResponseEdit}
+          create={AiResponseCreate}
+          show={AiResponseShow}
+        />
+        <Resource
+          name="Faq"
+          list={FaqList}
+          edit={FaqEdit}
+          create={FaqCreate}
+          show={FaqShow}
         />
       </Admin>
     </div>
